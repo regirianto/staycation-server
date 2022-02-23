@@ -15,7 +15,15 @@
 <script src="/sb-admin-2/js/demo/datatables-demo.js"></script>
 
 
+<script>
+  const inputBankPreview = document.querySelector('#imgBank');
+  const imgPreview = document.querySelector('#imgPreview')
+  inputBankPreview.addEventListener('change', (e) => {
+    const img = e.target.files[0];
+    imgPreview.setAttribute('src', URL.createObjectURL(img))
 
+  })
+</script>
 
 </body>
 

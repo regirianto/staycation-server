@@ -10,6 +10,7 @@
           <tr>
             <th>#</th>
             <th>Bank Name</th>
+            <th>Logo</th>
             <th>Bank Account Holder Name</th>
             <th>Bank Account Number</th>
             <th>Actions</th>
@@ -19,6 +20,7 @@
           <tr>
             <th>#</th>
             <th>Bank Name</th>
+            <th>Logo</th>
             <th>Bank Account Holder Name</th>
             <th>Bank Account Number</th>
             <th>Actions</th>
@@ -34,12 +36,21 @@
                 <%= bank.name %>
               </td>
               <td>
+                <img src='http://localhost:3000/images/<%=bank.image%>' alt="" width="60px">
+              </td>
+              <td>
                 <%= bank.bankAccountName %>
               </td>
               <td>
                 <%= bank.bankAccountNumber %>
               </td>
-              <td><button class="btn btn-sm btn-danger">Hapus</button></td>
+
+              <td>
+                <form action="/bank/<%= bank._id %>?_method=DELETE" method="post">
+                  <a href="/bank/<%= bank.id %>" class="btn btn-success btn-sm">Edit</a>
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </td>
             </tr>
             <% }) %>
         </tbody>
