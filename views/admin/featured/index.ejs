@@ -9,35 +9,29 @@
       <div id="content">
 
         <% include ../../partials/navbar %>
+
           <!-- Begin Page Content -->
           <div class="container-fluid">
-            <!-- Page Heading -->
-            <div class="row d-flex align-items-center ">
-              <div class="col-md-6">
-                <h1 class="h3 text-gray-800">Item Page</h1>
-              </div>
-
-              <div class="col-md-6">
-                <ol class="breadcrumb bg-transparent d-flex justify-content-md-end">
-                  <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
-                  <li class="breadcrumb-item active">Item</li>
-                </ol>
-              </div>
-            </div>
             <% include ../../partials/message %>
-              <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a class="nav-link active" id="nav-show-tab" data-toggle="tab" href="#nav-show" role="tab"
-                    aria-controls="nav-show" aria-selected="true">Show</a>
-
+              <!-- Page Heading -->
+              <div class="row d-flex align-items-center ">
+                <div class="col-md-6">
+                  <h1 class="h3 text-gray-800">Featured Page</h1>
                 </div>
-              </nav>
-              <a href="/item/create" class="btn btn-primary mt-3">Add Item</a>
-              <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-show" role="tabpanel" aria-labelledby="nav-show-tab">
-                  <% include ./table %>
+                <div class="col-md-6">
+                  <ol class="breadcrumb bg-transparent d-flex justify-content-md-end">
+                    <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item active">Featured</li>
+                  </ol>
                 </div>
               </div>
+
+              <a href="/featured/create" class="btn btn-primary mb-3">Add Featured</a>
+
+
+
+
+              <% include ./table %>
 
 
 

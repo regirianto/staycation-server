@@ -10,6 +10,7 @@ const flash = require("connect-flash");
 const indexRouter = require("./app/routes/index");
 const dashboardRouter = require("./app/routes/dashboard");
 const categoryRouter = require("./app/routes/category");
+const featuredRouter = require("./app/routes/featured");
 const bankRouter = require("./app/routes/bank");
 const itemRouter = require("./app/routes/item");
 const bookingRouter = require("./app/routes/booking");
@@ -44,6 +45,7 @@ app.use(
 app.use("/", indexRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/category", categoryRouter);
+app.use("/featured", featuredRouter);
 app.use("/bank", bankRouter);
 app.use("/item", itemRouter);
 app.use("/booking", bookingRouter);

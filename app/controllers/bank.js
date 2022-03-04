@@ -52,8 +52,7 @@ const store = async (req, res) => {
           req.flash("alertMessage", "Add Bank Success");
           req.flash("alertStatus", "success");
           res.redirect("/bank");
-        })
-        .catch((err) => console.log(err));
+        });
     }
   } catch (error) {
     req.flash("alertMessage", error.message);

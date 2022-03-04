@@ -6,6 +6,7 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: [true, "Name category must be required"],
     },
+    items: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Item" }],
   },
   { timestamps: true }
 );

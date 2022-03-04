@@ -16,13 +16,13 @@
             <!-- Page Heading -->
             <div class="row d-flex align-items-center">
               <div class="col-md-6">
-                <h1 class="h3 text-gray-800">Form Update Bank</h1>
+                <h1 class="h3 text-gray-800">Update Form Featured</h1>
               </div>
               <div class="col-md-6">
                 <ol class="breadcrumb bg-transparent d-flex justify-content-md-end">
                   <li class="breadcrumb-item "><a href="/" class="text-decoration-none">Home</a></li>
-                  <li class="breadcrumb-item"><a href="/bank" class="text-decoration-none">Bank</a></li>
-                  <li class="breadcrumb-item active">Update Bank</li>
+                  <li class="breadcrumb-item"><a href="/featured" class="text-decoration-none">Featured</a></li>
+                  <li class="breadcrumb-item active">Update Featured</li>
                 </ol>
               </div>
             </div>
@@ -37,37 +37,21 @@
                       <% }) %>
                   </div>
                   <% } %>
-                    <form class="p-4" action="/bank/<%= bank._id %>?_method=PUT" method="post"
-                      enctype="multipart/form-data">
+                    <form action="/featured/<%= featured._id %>?_method=PUT" method="post" enctype="multipart/form-data"
+                      class="p-5">
                       <div class="form-group">
-                        <label class="text-dark font-weight-bold" for="bankAccountName">Bank Account Holder</label>
-                        <input type="text" class="form-control" id="bankAccountName"
-                          placeholder="Please Input Bank Account Holder" name="bankAccountName"
-                          value="<%= bank.bankAccountName %>" required>
-                      </div>
-                      <div class="form-group">
-                        <label class="text-dark font-weight-bold" for="name">Name Bank</label>
-                        <input type="text" class="form-control" id="name"
-                          placeholder="Please Input Bank Name ex: BCA MANDiRI BRI etc.." name="name"
-                          value="<%= bank.name %>">
+                        <label class="text-dark font-weight-bold" for="name">Name Featured</label>
+                        <input type="text" class="form-control" id="name" placeholder="Please Input Name Featured"
+                          value="<%= featured.name %>" name="name">
                       </div>
                       <div class="form-group">
-                        <label class="text-dark font-weight-bold" for="bankAccountNumber">Bank Account Number</label>
-                        <input type="number" class="form-control" id="bankAccountNumber"
-                          placeholder="Please Input Bank Account Number " name="bankAccountNumber"
-                          value="<%= bank.bankAccountNumber  %>" required>
+                        <img src="http://localhost:3000/images/<%= featured.image %>" alt="" width="100px"
+                          class="d-block my-1" id="imgPreview">
+                        <label class="text-dark font-weight-bold" for="imgInput">Image Featured</label>
+                        <input type="file" class="form-control" placeholder="Please Input Image Featured" name="image"
+                          id="imgInput">
                       </div>
-                      <img src="http://localhost:3000/images/<%=bank.image%>" id="imgPreview" width="200px"
-                        class="d-block">
-                      <label class="text-dark font-weight-bold mt-2">Bank Image</label>
-                      <div class=" custom-file">
-                        <input type="file" class="custom-file-input" id="imgInput" name="image"
-                          value="<%= bank.image %>">
-                        <label class="custom-file-label" for="imgInput">Choose file</label>
-                        <small class="text-muted font-weight-light">*file must be an image jpg,jpeg,png and size max
-                          1mb</small>
-                      </div>
-                      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                      <button type="submit" class="btn btn-primary w-100">Save</button>
                     </form>
               </div>
             </div>

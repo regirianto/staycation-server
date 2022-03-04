@@ -1,15 +1,17 @@
 const { validationResult } = require("express-validator");
 const Category = require("../models/Category");
+const Item = require("../models/Item");
 
 const index = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().select("_id name");
     const alertMessage = req.flash("alertMessage");
     const alertStatus = req.flash("alertStatus");
     const alert = {
       alertMessage,
       alertStatus,
     };
+
     res.render("admin/category", {
       categories,
       alert,
@@ -60,7 +62,7 @@ const edit = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
-    const categorie = await Category.findById(id);
+    const categorie = await Category.findById(id).select("name _id");
     res.render("admin/category/edit", { categorie, name });
   } catch (error) {
     req.flash("alertMessage", error.message);
@@ -95,11 +97,15 @@ const update = async (req, res) => {
 const destroy = async (req, res) => {
   try {
     const { id } = req.params;
-
-    await Category.findByIdAndRemove(id);
-    req.flash("alertMessage", "Delete Category Success");
-    req.flash("alertStatus", "success");
-    res.redirect("/category");
+    const category = await Category.findByIdAndRemove(id);
+    if (category) {
+      category.items.forEach(async (item) => {
+        await Item.findByIdAndRemove(item);
+      });
+      req.flash("alertMessage", "Delete Category Success");
+      req.flash("alertStatus", "success");
+      res.redirect("/category");
+    }
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");

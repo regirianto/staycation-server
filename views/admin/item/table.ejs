@@ -1,5 +1,5 @@
 <!-- table -->
-<div class="card shadow mb-4">
+<div class="card shadow mb-4 mt-3 ">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Data Item</h6>
   </div>
@@ -10,10 +10,10 @@
           <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Country</th>
-            <th>City</th>
             <th>Category</th>
             <th>Price</th>
+            <th>City</th>
+            <th>Country</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -21,21 +21,44 @@
           <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Country</th>
-            <th>City</th>
             <th>Category</th>
             <th>Price</th>
+            <th>City</th>
+            <th>Country</th>
             <th>Actions</th>
           </tr>
         </tfoot>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>House</td>
-            <td>
-              <button class="btn btn-sm btn-info">Detail</button>
-            </td>
-          </tr>
+          <% items.forEach((item,i)=> { %>
+            <tr>
+
+              <td>
+                <%= i+1 %>
+              </td>
+              <td>
+                <%= item.title %>
+              </td>
+              <td>
+                <%= item.category.name %>
+              </td>
+              <td>
+                <%= new Intl.NumberFormat('en-US', { style: 'currency' , currency: 'USD' }).format(item.price) %>
+              </td>
+              <td>
+                <%= item.city %>
+              </td>
+              <td>
+                <%= item.country %>
+              </td>
+              <td class="d-flex justify-content-around align-items-center">
+                <button class="btn btn-sm btn-info btn-sm">Edit</button>
+                <button class="btn btn-sm btn-info btn-sm">Detail</button>
+                <form action="/item/<%= item._id %>?_method=DELETE" method="post">
+                  <button href="" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
         </tbody>
       </table>
     </div>

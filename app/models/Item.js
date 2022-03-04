@@ -1,3 +1,4 @@
+const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 
 const itemSchema = new mongoose.Schema(
@@ -8,10 +9,12 @@ const itemSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
+      default: 0,
       required: [true, "Price item is required"],
     },
     country: {
       type: String,
+      default: "Indonesia",
       required: [true, "Country item is required"],
     },
     city: {
@@ -22,17 +25,18 @@ const itemSchema = new mongoose.Schema(
       type: String,
       required: [true, "Descriptions item is required"],
     },
-    image: [
+    image: [{ type: String, required: true }],
+    category: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Category",
+      required: [true, "Category Is required"],
+    },
+    featured: [
       {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: "Image",
+        ref: "Featured",
       },
     ],
-    category: { type: mongoose.SchemaTypes.ObjectId, ref: "Category" },
-    featured: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "Featured",
-    },
   },
   { timestamps: true }
 );

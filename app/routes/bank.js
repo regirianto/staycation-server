@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { body } = require("express-validator");
 const { uploadSingle } = require("../middleware/multer");
 const {
   validationCreate,

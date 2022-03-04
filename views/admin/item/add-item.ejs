@@ -1,0 +1,64 @@
+<form action="/item" method="post" enctype="multipart/form-data" class="p-5">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" id="title" placeholder="Add Title" name="title" required
+      value="<%= typeof title != 'undefined' ? title :"" %>">
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" placeholder="Add price in $" name="price" required
+      value="<%= typeof price != 'undefined' ? price :"" %>">
+  </div>
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" class="form-control" id="country" placeholder="Add country" name="country" required
+      value="<%= typeof country != 'undefined' ? country :"" %>">
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" class="form-control" id="city" placeholder="Add city" name="city" required
+      value="<%= typeof city != 'undefined' ? city :"" %>">
+  </div>
+  <div class="form-group">
+    <label for="category">Category Item</label>
+    <select class="form-control" name="category">
+      <option hidden value=""> --- Select Category --- </option>
+      <% categories.forEach(categorys=> { %>
+        <option value="<%= categorys._id %>" <%=typeof category !='undefined' &&
+          category.toString()==categorys._id.toString() ? selected='selected' :'' %>>
+          <%= categorys.name %>
+        </option>
+        <% }) %>
+    </select>
+  </div>
+
+
+  <div class="form-group">
+    <label>Featured</label>
+    <div class="select2-purple">
+      <select class="form-control select2bs4" multiple='multiple' name="featured"
+        data-placeholder="Select Available Featured an Item" required>
+        <% features.forEach(featured=> { %>
+          <option value="<%= featured._id %>">
+            <%= featured.name %>
+          </option>
+          <% }) %>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Item Image</label>
+    <div class="itemsImgPreview my-2"></div>
+    <input type="file" class="form-control" id="imgItems" name="image" multiple="multiple" required>
+    <label>Choose file</label>
+    <small class="text-muted font-weight-light">*file must be an image jpg,jpeg,png and size max
+      1mb</small>
+  </div>
+
+  <div class="form-group">
+    <textarea type="text-area" class="form-control" id="desc" placeholder="Add desc min 50 characters" name="desc"
+      required><%= typeof desc != 'undefined' ? desc :'' %> </textarea>
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Save</button>
+</form>

@@ -1,0 +1,50 @@
+<!-- table -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Data Category</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% features.forEach((featured,i)=> { %>
+            <tr>
+              <td>
+                <%= i+1 %>
+              </td>
+              <td>
+                <%= featured.name %>
+              </td>
+              <td class="text-center"><img src="http://localhost:3000/images/<%= featured.image %>"
+                  alt="<%= featured.name %>" width="80px">
+              </td>
+              <td>
+                </button>
+                <form action="/featured/<%= featured.id %>?_method=DELETE" method="post">
+                  <a href="/featured/edit/<%= featured._id %>" class="btn btn-sm btn-success">Edit</a>
+                  <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

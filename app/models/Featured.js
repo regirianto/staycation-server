@@ -6,9 +6,6 @@ const featuredSchema = new mongoose.Schema(
       type: String,
       required: [true, "Featured name is required"],
     },
-    value: {
-      type: String,
-    },
     image: {
       type: String,
       required: [true, "Featured image is required"],

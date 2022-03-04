@@ -30,7 +30,9 @@ db.on("error", function (err) {
 });
 
 db.on("open", () => {
-  server.listen(port, () => console.log(`Server is runnig on port ${port}`));
+  server.listen(port, () =>
+    console.log(`Server is runnig on port http://localhost:${port}`)
+  );
   server.on("error", onError);
   server.on("listening", onListening);
 });
