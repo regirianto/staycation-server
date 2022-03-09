@@ -1,6 +1,8 @@
 const index = (req, res) => {
   try {
-    res.render("admin/booking");
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/booking", { user });
   } catch (error) {
     console.log(error);
   }

@@ -50,12 +50,8 @@
               <td>
                 <%= item.country %>
               </td>
-              <td class="d-flex justify-content-around align-items-center">
-                <button class="btn btn-sm btn-info btn-sm">Edit</button>
-                <button class="btn btn-sm btn-info btn-sm">Detail</button>
-                <form action="/item/<%= item._id %>?_method=DELETE" method="post">
-                  <button href="" class="btn btn-danger btn-sm">Delete</button>
-                </form>
+              <td>
+                <a href="/item/<%= item._id %>" class="btn btn-sm btn-info btn-sm">Detail</a>
               </td>
             </tr>
             <% }) %>

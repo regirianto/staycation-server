@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const Bank = require("../models/Bank");
 const { deleteFiles } = require("../../utils");
+const jwt = require("jsonwebtoken");
 
 const index = async (req, res) => {
   const banks = await Bank.find();
@@ -11,7 +12,9 @@ const index = async (req, res) => {
       alertMessage,
       alertStatus,
     };
-    res.render("admin/bank", { banks, alert });
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/bank", { banks, alert, user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -21,7 +24,9 @@ const index = async (req, res) => {
 
 const create = (req, res) => {
   try {
-    res.render("admin/bank/create");
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/bank/create", { user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -31,6 +36,8 @@ const create = (req, res) => {
 
 const store = async (req, res) => {
   try {
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
     const { name, bankAccountName, bankAccountNumber } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -39,6 +46,7 @@ const store = async (req, res) => {
         bankAccountName,
         name,
         bankAccountNumber,
+        user,
       });
     } else {
       await Bank({
@@ -82,7 +90,9 @@ const edit = async (req, res) => {
   try {
     const { id } = req.params;
     const bank = await Bank.findById(id);
-    res.render("admin/bank/edit", { bank });
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/bank/edit", { bank, user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -94,6 +104,8 @@ const update = async (req, res) => {
   try {
     const { name, bankAccountName, bankAccountNumber } = req.body;
     const { id } = req.params;
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
     const errors = validationResult(req);
     const bank = await Bank.findById(id);
     if (!errors.isEmpty()) {
@@ -103,6 +115,7 @@ const update = async (req, res) => {
         name,
         bankAccountNumber,
         bank,
+        user,
       });
     }
 

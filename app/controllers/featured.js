@@ -1,5 +1,7 @@
 const Featured = require("../models/Featured");
 const { deleteFiles } = require("../../utils");
+const Item = require("../models/Item");
+const jwt = require("jsonwebtoken");
 const index = async (req, res) => {
   try {
     const features = await Featured.find();
@@ -9,7 +11,9 @@ const index = async (req, res) => {
       alertMessage,
       alertStatus,
     };
-    res.render("admin/featured", { alert, features });
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/featured", { alert, features, user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -19,7 +23,9 @@ const index = async (req, res) => {
 
 const create = (req, res) => {
   try {
-    res.render("admin/featured/create");
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/featured/create", { user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -50,7 +56,9 @@ const store = async (req, res) => {
 const edit = async (req, res) => {
   try {
     const featured = await Featured.findById(req.params.id);
-    res.render("admin/featured/edit", { featured });
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/featured/edit", { featured, user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -87,8 +95,16 @@ const destroy = async (req, res) => {
   try {
     const { id } = req.params;
     const featured = await Featured.findByIdAndRemove(id);
+    const items = await Item.find({ featured: id });
     if (featured) {
       deleteFiles("public/images", featured.image);
+      items.map(async (item) => {
+        let newFeatureditem = item.featured.filter(
+          (itemFeatured) => itemFeatured != id
+        );
+        item.featured = newFeatureditem;
+        await item.save();
+      });
       req.flash("alertMessage", "Update Featured Success");
       req.flash("alertStatus", "success");
       res.redirect("/featured");

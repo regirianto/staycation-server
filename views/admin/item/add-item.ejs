@@ -1,4 +1,4 @@
-<form action="/item" method="post" enctype="multipart/form-data" class="p-5">
+<form action="/item" method="post" class="p-5">
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" class="form-control" id="title" placeholder="Add Title" name="title" required
@@ -45,15 +45,6 @@
           <% }) %>
       </select>
     </div>
-  </div>
-
-  <div class="form-group">
-    <label>Item Image</label>
-    <div class="itemsImgPreview my-2"></div>
-    <input type="file" class="form-control" id="imgItems" name="image" multiple="multiple" required>
-    <label>Choose file</label>
-    <small class="text-muted font-weight-light">*file must be an image jpg,jpeg,png and size max
-      1mb</small>
   </div>
 
   <div class="form-group">

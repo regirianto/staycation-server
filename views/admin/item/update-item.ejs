@@ -1,0 +1,57 @@
+<form action="/item/<%= item._id %>?_method=PUT" method="post" class="p-4">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" id="title" placeholder="Add Title" name="title" value="<%= item.title %>"
+      required>
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" placeholder="Add price in $" name="price"
+      value="<%= item.price %>" required>
+  </div>
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input type="text" class="form-control" id="country" placeholder="Add country" name="country"
+      value="<%= item.country %>" required>
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input type="text" class="form-control" id="city" placeholder="Add city" name="city" value="<%= item.city %>"
+      required>
+  </div>
+  <div class="form-group">
+    <label for="category">Category Item</label>
+    <select class="form-control" name="category">
+      <option hidden value=""> --- Select Category --- </option>
+      <% categories.forEach(categorys=> { %>
+        <option value="<%= categorys._id %>" <%=categorys._id.toString()===item.category.toString() ?
+          selected='selected' :'' %>>
+          <%= categorys.name %>
+        </option>
+        <% }) %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Featured</label>
+    <div class="select2-purple">
+      <select class="form-control select2bs4" multiple=' multiple' name="featured"
+        data-placeholder="Select Available Featured an Item" required>
+        <% features.forEach(featured=> { %>
+          <option value="<%= featured._id %>" <% item.featured.forEach(e=> { %>
+            <% if (e.toString()==featured._id.toString()) { %>
+              <%= selected='selected' %>
+                <% } %>
+                  <% }) %>>
+                    <%= featured.name %>
+          </option>
+          <% }) %>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Descriptions</label>
+    <textarea type="text-area" class="form-control" id="desc" placeholder="Add desc min 50 characters" name="desc"
+      required><%= item.desc %></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Save</button>
+</form>

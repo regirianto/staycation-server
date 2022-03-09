@@ -25,7 +25,7 @@ const itemSchema = new mongoose.Schema(
       type: String,
       required: [true, "Descriptions item is required"],
     },
-    image: [{ type: String, required: true }],
+
     category: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "Category",
@@ -35,6 +35,12 @@ const itemSchema = new mongoose.Schema(
       {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Featured",
+      },
+    ],
+    image: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "ImageItem",
       },
     ],
   },

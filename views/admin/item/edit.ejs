@@ -16,13 +16,13 @@
             <!-- Page Heading -->
             <div class="row d-flex align-items-center">
               <div class="col-md-6">
-                <h1 class="h3 text-gray-800">Add Form Category</h1>
+                <h1 class="h3 text-gray-800">Update Form Item</h1>
               </div>
               <div class="col-md-6">
                 <ol class="breadcrumb bg-transparent d-flex justify-content-md-end">
                   <li class="breadcrumb-item "><a href="/" class="text-decoration-none">Home</a></li>
-                  <li class="breadcrumb-item"><a href="/category" class="text-decoration-none">Category</a></li>
-                  <li class="breadcrumb-item active">Add Category</li>
+                  <li class="breadcrumb-item"><a href="/item" class="text-decoration-none">Item</a></li>
+                  <li class="breadcrumb-item active">Update Item</li>
                 </ol>
               </div>
             </div>
@@ -37,14 +37,7 @@
                       <% }) %>
                   </div>
                   <% } %>
-                    <form class="p-4" action="/category" method="post">
-                      <div class="form-group">
-                        <label class="text-dark font-weight-bold" for="name">Name Category</label>
-                        <input type="text" class="form-control" id="name" placeholder="Please Input Name Category"
-                          name="name" value="<%- typeof name !='undefined' ? name : "" %>" required>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    <% include update-item %>
               </div>
             </div>
           </div>

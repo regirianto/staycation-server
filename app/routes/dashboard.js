@@ -1,5 +1,5 @@
 const express = require("express");
-const { index, store } = require("../controllers/dashboard");
+const { index } = require("../controllers/dashboard");
 const router = express.Router();
 
 router.get("/", index);

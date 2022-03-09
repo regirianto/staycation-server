@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const { deleteFiles } = require("../../utils");
 const Category = require("../models/Category");
 const Item = require("../models/Item");
 
@@ -97,10 +98,13 @@ const update = async (req, res) => {
 const destroy = async (req, res) => {
   try {
     const { id } = req.params;
-    const category = await Category.findByIdAndRemove(id);
+    const category = await Category.findByIdAndRemove(id).populate("items");
     if (category) {
       category.items.forEach(async (item) => {
         await Item.findByIdAndRemove(item);
+        item.image.forEach((img) => {
+          deleteFiles("public/images", img);
+        });
       });
       req.flash("alertMessage", "Delete Category Success");
       req.flash("alertStatus", "success");

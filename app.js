@@ -14,8 +14,9 @@ const featuredRouter = require("./app/routes/featured");
 const bankRouter = require("./app/routes/bank");
 const itemRouter = require("./app/routes/item");
 const bookingRouter = require("./app/routes/booking");
-// const cobaRouter = require("./app/routes/coba");
-// const usersRouter = require("./app/routes/users");
+const authRouter = require("./app/routes/auth");
+const isLogin = require("./app/middleware/auth");
+// const userRouter = require("./app/routes/user");
 
 const app = express();
 app.use(
@@ -42,7 +43,8 @@ app.use(
   express.static(path.join(__dirname, "node_modules/startbootstrap-sb-admin-2"))
 );
 
-app.use("/", indexRouter);
+app.use("/", authRouter);
+app.use(isLogin);
 app.use("/dashboard", dashboardRouter);
 app.use("/category", categoryRouter);
 app.use("/featured", featuredRouter);

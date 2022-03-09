@@ -18,13 +18,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-
-
-
 <script>
   // IMG PREVIEW 
   const inputImage = document.querySelector('#imgInput');
-  const imgPreview = document.querySelector('#imgPreview')
+  const imgPreview = document.querySelector('#imgPreview');
   if (inputImage) {
     inputImage.addEventListener('change', (e) => {
       const img = e.target.files[0];
@@ -35,18 +32,19 @@
   // IMG PREVIEW ITEMS
   const imgItems = document.querySelector('#imgItems');
   const itemsImgPreview = document.querySelector('.itemsImgPreview')
-  imgItems.addEventListener('change', (e) => {
-    for (let i = 0; i < e.target.files.length; i++) {
-      const img = document.createElement('img');
-      img.setAttribute('src', URL.createObjectURL(e.target.files[i]))
-      img.style.width = '100px'
-      img.style.height = '100px'
-      img.classList.add('mr-2')
-      itemsImgPreview.appendChild(img)
-    }
-  })
+  if (imgItems) {
+    imgItems.addEventListener('change', (e) => {
+      for (let i = 0; i < e.target.files.length; i++) {
+        const img = document.createElement('img');
+        img.setAttribute('src', URL.createObjectURL(e.target.files[i]))
+        img.style.width = '100px'
+        img.style.height = '100px'
+        img.classList.add('mr-2')
+        itemsImgPreview.appendChild(img)
+      }
+    })
+  }
 </script>
-
 
 <script>
   //CKEDITOR
@@ -61,9 +59,6 @@
 
   $('.select2bs4').select2({
   });
-
-
-
 </script>
 
 </body>

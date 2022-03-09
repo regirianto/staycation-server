@@ -1,0 +1,170 @@
+<% include ../../partials/header %>
+
+  <% include ../../partials/sidebar %>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <% include ../../partials/navbar %>
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="row d-flex align-items-center ">
+              <div class="col-md-6">
+                <h1 class="h3 text-gray-800">Detail Item Page</h1>
+              </div>
+
+              <div class="col-md-6">
+                <ol class="breadcrumb bg-transparent d-flex justify-content-md-end">
+                  <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+                  <li class="breadcrumb-item active">Item</li>
+                </ol>
+              </div>
+            </div>
+            <% include ../../partials/message %>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1 class="font-weight-bold text-center my-3 text-capitalize text-dark">
+                      <%= item.title %>
+                    </h1>
+                    <div class="">
+                      <div class="row d-flex justify-content-center align-items-center my-4">
+                        <% item.image.forEach(img=> { %>
+                          <div
+                            class="col-lg-4 m-1 p-0 d-flex justify-content-center align-items-center overflow-hidden">
+                            <form action="/item/image-item/<%= item._id %>/<%= img._id %>?_method=DELETE" method="post">
+                              <img src="http://localhost:3000/images/<%= img.imageUrl %>" alt="<%= item.title %>"
+                                class="position-relative" style="object-fit:cover;" width="300px" height="200px">
+                              <button class="btn btn-danger position-absolute"
+                                style="top: 0; left: 0; opacity: 0; width: 100%; height: 100%;"
+                                onclick="return confirm('Are you sure want to delete this image ?')">Delete</button>
+                            </form>
+                          </div>
+                          <% }) %>
+
+                      </div>
+
+                      <div class="details row d-flex justify-content-between align-items-center pt-2 ">
+                        <div>
+                          <p class="text-dark font-weight-bold col-sm">Category : <br><span class="font-weight-normal">
+                              <%= item.category.name %>
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <p class="text-dark font-weight-bold col-sm">Price : <br><span class="font-weight-normal">
+                              <%= new Intl.NumberFormat('en-US', { style: 'currency' , currency: 'USD' }).format(
+                                item.price) %>
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <p class="text-dark font-weight-bold col-sm">Country : <br><span class="font-weight-normal">
+                              <%= item.country %>
+                            </span>
+                          </p>
+                        </div>
+                        <div>
+                          <p class="text-dark font-weight-bold col-sm">City : <br><span class="font-weight-normal">
+                              <%= item.city %>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="featured my-3">
+                        <h5 class="text-dark font-weight-bold">Featured</h5>
+                        <div class="row d-flex justify-content-around">
+                          <% item.featured.forEach(featured=> { %>
+                            <div class="col-sm-1 mt-2 d-flex flex-column align-items-center">
+                              <img src="http://localhost:3000/images/<%= featured.image %>" alt="" class="d-block">
+                              <p class="mt-1 text-center">
+                                <%= featured.name %>
+                              </p>
+                            </div>
+                            <% }) %>
+                        </div>
+                      </div>
+                      <div class="desc mb-3">
+                        <h5 class="text-dark font-weight-bold">Descriptions</h5>
+                        <p>
+                          <%- item.desc %>
+                        </p>
+                      </div>
+
+                      <div class="row d-flex justify-content-center align-items-center my-5">
+                        <form action="/item/<%= item._id %>?_method=DELETE" method="post" class="mr-1 mb-1">
+                          <button class="btn btn-danger mr-1 d-inline">Delete Item</button>
+                        </form>
+
+                        <div class="mr-1 mb-1">
+                          <a href="/item/edit/<%= item._id %>" class="btn btn-success">Edit Item</a>
+                        </div>
+                        <div class="mr-1 mb-1">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-image">
+                            Add Images
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="modal fade" id="add-image" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg ">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Form add Image</h5>
+                      <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/item/image-item/<%= item._id %>" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <label>Item Image</label>
+                          <div class="itemsImgPreview my-2"></div>
+                          <input type="file" class="form-control" id="imgItems" name="image" multiple="multiple"
+                            accept="image/*">
+                          <label>Choose file</label>
+                          <small class="text-muted font-weight-light">*file must be an image jpg,jpeg,png and size max
+                            2mb</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Save Image</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <% include ../../partials/footer %>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+
+
+    <% include ../../partials/end %>
