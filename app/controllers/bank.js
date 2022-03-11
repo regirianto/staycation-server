@@ -41,6 +41,9 @@ const store = async (req, res) => {
     const { name, bankAccountName, bankAccountNumber } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      if (req.file) {
+        deleteFiles("public/images", req.file.filename);
+      }
       return res.render("admin/bank/create", {
         errors: errors.array(),
         bankAccountName,
@@ -63,9 +66,12 @@ const store = async (req, res) => {
         });
     }
   } catch (error) {
+    if (req.file) {
+      deleteFiles("public/images", req.file.filename);
+    }
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
-    res.redirect("/bank");
+    return res.redirect("/bank");
   }
 };
 
@@ -109,6 +115,9 @@ const update = async (req, res) => {
     const errors = validationResult(req);
     const bank = await Bank.findById(id);
     if (!errors.isEmpty()) {
+      if (req.file) {
+        deleteFiles("public/images", req.file.filename);
+      }
       return res.render("admin/bank/edit", {
         errors: errors.array(),
         bankAccountName,

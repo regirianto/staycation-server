@@ -35,7 +35,7 @@ const create = (req, res) => {
 
 const store = async (req, res) => {
   try {
-    const { name, value } = req.body;
+    const { name } = req.body;
     const featured = await Featured({
       name,
       image: req.file.filename,

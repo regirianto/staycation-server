@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const Booking = require("../models/Booking");
 const jwt = require("jsonwebtoken");
 const Item = require("../models/Item");
+const { deleteFiles } = require("../../utils");
 
 const index = async (req, res) => {
   try {
@@ -56,7 +57,7 @@ const confirmationBooking = async (req, res) => {
   }
 };
 
-const store = async (req, res, next) => {
+const store = async (req, res) => {
   try {
     const {
       firstname,
@@ -75,9 +76,12 @@ const store = async (req, res, next) => {
     const err = errors.array();
 
     if (!errors.isEmpty()) {
+      if (req.file) {
+        deleteFiles("public/images", req.file.filename);
+      }
       return res
         .status(400)
-        .json({ error: true, message: err.map((e) => `${e.value} ${e.msg}`) });
+        .json({ error: true, message: err.map((e) => `${e.msg}`) });
     }
     const itemBooking = await Item.findById(item);
     if (!itemBooking) {
@@ -85,8 +89,9 @@ const store = async (req, res, next) => {
         .status(404)
         .json({ error: true, message: "Item Booking Not found" });
     } else {
-      const tax = (itemBooking.price * 10) / 100;
-      const total = (itemBooking.price + tax) * duration;
+      const total = itemBooking.price * duration;
+      const tax = (total * 10) / 100;
+      const finalTotal = total + tax;
       const idInvoice = item.substring(item.length - 6);
       const booking = await Booking({
         name: `${firstname} ${lastname}`,
@@ -99,7 +104,7 @@ const store = async (req, res, next) => {
         invoice: `B-${Math.floor(Math.random() * 10000000)}-${idInvoice}`,
         duration,
         accountHolder,
-        total,
+        total: finalTotal,
         proofPayment: req.file.filename,
       }).save();
       itemBooking.countBooking += 1;
@@ -109,7 +114,10 @@ const store = async (req, res, next) => {
         .json({ message: "Booking Success", data: booking });
     }
   } catch (error) {
-    res.status(500).json({ error: true, message: error.message });
+    if (req.file) {
+      deleteFiles("public/images", req.file.filename);
+    }
+    return res.status(500).json({ error: true, message: error.message });
   }
 };
 

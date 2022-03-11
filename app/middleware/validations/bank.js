@@ -13,7 +13,7 @@ const validationCreate = [
     .isNumeric()
     .withMessage("Bank Account Number Must be Numeric"),
   body("image").custom((value, { req }) => {
-    const extensionFile = req.file?.mimetype.toLowerCase();
+    const extFile = ["image/jpeg", "image/jpg", "image/png"];
     if (typeof req.file == "undefined") {
       throw new Error(
         "Image is required and file must be an image and size max 1mb"
@@ -24,16 +24,11 @@ const validationCreate = [
         deleteFiles("public/images", req.file.filename);
         throw new Error("Size bank image max 1mb");
       }
-      if (
-        extensionFile == "image/jpeg" ||
-        extensionFile == "image/jpg" ||
-        extensionFile == "image/png"
-      ) {
-        return true;
-      } else {
+      if (!extFile.includes(req.file.mimetype)) {
         deleteFiles("public/images", req.file.filename);
         throw new Error("Image must be JPG PNG JPEG");
       }
+      return true;
     }
   }),
   body("bankAccountNumber").custom(async (value) => {
@@ -56,24 +51,18 @@ const validationUpdate = [
     .isNumeric()
     .withMessage("Bank Account Number Must be Numeric"),
   body("image").custom((value, { req }) => {
-    const extensionFile = req.file?.mimetype.toLowerCase();
+    const extFile = ["image/jpeg", "image/jpg", "image/png"];
     if (req.file) {
       if (req.file.size > 1000000) {
         deleteFiles("public/images", req.file.filename);
         throw new Error("Size bank image max 1mb");
       }
-      if (
-        extensionFile == "image/jpeg" ||
-        extensionFile == "image/jpg" ||
-        extensionFile == "image/png"
-      ) {
-        return true;
-      } else {
+      if (!extFile.includes(req.file.mimetype)) {
         deleteFiles("public/images", req.file.filename);
         throw new Error("Image must be JPG PNG JPEG");
       }
+      return true;
     }
-    return true;
   }),
   body("bankAccountNumber").custom(async (value, { req }) => {
     const oldBank = await Bank.findById(req.params.id);
