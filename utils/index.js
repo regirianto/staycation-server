@@ -1,9 +1,10 @@
 const fs = require("fs");
 const path = require("path");
+
 const deleteFiles = (location, namefile) => {
-  fs.unlink(path.join(location, namefile), (error) => {
-    if (error) {
-      console.log(error);
+  fs.access(path.join(location, namefile), async (err) => {
+    if (!err) {
+      await fs.promises.unlink(path.join(location, namefile));
     }
   });
 };

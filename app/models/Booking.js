@@ -2,6 +2,18 @@ const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Name is Required"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email is Required"],
+    },
+    phoneNumber: {
+      type: String,
+      required: [true, "Phone number is required"],
+    },
     bookingStartDate: {
       type: Date,
       required: [true, "Booking Start Date is Required"],
@@ -11,18 +23,16 @@ const bookingSchema = new mongoose.Schema(
       required: [true, "Booking Start Date is Required"],
     },
     item: {
-      type: mongoose.SchemaType.ObjectId,
+      required: true,
+      type: mongoose.SchemaTypes.ObjectId,
       ref: "Item",
     },
-    member: {
-      type: mongoose.SchemaType.ObjectId,
-      ref: "Member",
-    },
+
     bankFrom: {
       type: String,
       required: [true, "Booking bank from is required"],
     },
-    night: {
+    duration: {
       type: Number,
       required: [true, "Booking per night is required"],
     },
@@ -40,6 +50,10 @@ const bookingSchema = new mongoose.Schema(
       default: "pending",
     },
     total: {
+      type: String,
+      required: true,
+    },
+    invoice: {
       type: String,
       required: true,
     },

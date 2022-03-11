@@ -13,7 +13,8 @@ const isLogin = (req, res, next) => {
       jwt.verify(token, process.env.JWT_KEY);
       return next();
     } catch (error) {
-      next(error);
+      res.clearCookie("token");
+      return res.redirect("/");
     }
   }
 };

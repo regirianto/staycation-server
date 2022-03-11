@@ -16,7 +16,7 @@ const itemRouter = require("./app/routes/item");
 const bookingRouter = require("./app/routes/booking");
 const authRouter = require("./app/routes/auth");
 const isLogin = require("./app/middleware/auth");
-// const userRouter = require("./app/routes/user");
+const apiRoutes = require("./app/routes/api");
 
 const app = express();
 app.use(
@@ -43,6 +43,10 @@ app.use(
   express.static(path.join(__dirname, "node_modules/startbootstrap-sb-admin-2"))
 );
 
+//API
+const URL = "/api/v1/";
+app.use(URL, apiRoutes);
+
 app.use("/", authRouter);
 app.use(isLogin);
 app.use("/dashboard", dashboardRouter);
@@ -51,8 +55,6 @@ app.use("/featured", featuredRouter);
 app.use("/bank", bankRouter);
 app.use("/item", itemRouter);
 app.use("/booking", bookingRouter);
-// app.use("/users", usersRouter);
-// app.use("/coba", cobaRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

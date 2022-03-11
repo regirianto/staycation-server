@@ -29,7 +29,7 @@ const singin = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      req.flash("alertMessage", `${email} is Invalid !`);
+      req.flash("alertMessage", `Email ${email} is Invalid !`);
       req.flash("alertStatus", "danger");
       return res.redirect("/");
     } else {
@@ -47,6 +47,7 @@ const singin = async (req, res, next) => {
           maxAge: 24 * 60 * 60 * 1000,
           httpOnly: true,
         });
+
         return res.redirect("/dashboard");
       } else {
         req.flash("alertMessage", `Your password is Invalid !`);
@@ -68,7 +69,7 @@ const signout = (req, res) => {
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
-    res.redirect("/");
+    return res.redirect("/");
   }
 };
 

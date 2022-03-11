@@ -31,6 +31,10 @@ const itemSchema = new mongoose.Schema(
       ref: "Category",
       required: [true, "Category Is required"],
     },
+    countBooking: {
+      type: Number,
+      default: 0,
+    },
     featured: [
       {
         type: mongoose.SchemaTypes.ObjectId,

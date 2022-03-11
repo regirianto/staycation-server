@@ -9,11 +9,10 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Item</th>
-            <th>Member</th>
+            <th>Invoice</th>
+            <th>Item</th> 
+            <th>Customer</th>
             <th>Date</th>
-            <th>Account Holder</th>
-            <th>Price</th>
             <th>Total</th>
             <th>Status</th>
             <th>Actions</th>
@@ -21,22 +20,44 @@
         </thead>
         <tfoot>
           <th>#</th>
+          <th>Invoice</th>
           <th>Item</th>
-          <th>Member</th>
+          <th>Customer</th>
           <th>Date</th>
-          <th>Account Holder</th>
-          <th>Price</th>
           <th>Total</th>
           <th>Status</th>
           <th>Actions</th>
           </tr>
         </tfoot>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>House</td>
-            <td><button class="btn btn-sm btn-info">Details</button></td>
-          </tr>
+          <% bookings.forEach((booking,i)=> { %>
+            <tr>
+              <td>
+                <%= i+1 %>
+              </td>
+              <td>
+                <%= booking.invoice %>
+              </td>
+              <td>
+                <%= booking.item.title %>
+              </td>
+              <td>
+                <%= booking.name %>
+              </td>
+              <td>
+                <%= booking.createdAt.toLocaleString('id-ID').split(' ')[0].split('/').join('-') %>
+              </td>
+              <td>
+                <%= new Intl.NumberFormat('en-US', { style: 'currency' , currency: 'USD' }).format(booking.total) %>
+              </td>
+              <td class="text-center">
+                <button class="text-capitalize btn btn-sm <%= booking.status == 'success' ? 'btn-success' : booking.status == 'failed' ? 'btn-danger' : 'btn-warning' %>"><%= booking.status %></button>
+              </td>
+              <td class="text-center">
+               <a href="/booking/<%= booking._id %>" class="btn btn-sm btn-info">Detail</a>
+              </td>
+            </tr>
+            <% }) %>
         </tbody>
       </table>
     </div>

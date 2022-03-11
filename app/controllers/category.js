@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 const { deleteFiles } = require("../../utils");
 const Category = require("../models/Category");
 const Item = require("../models/Item");
@@ -12,10 +13,13 @@ const index = async (req, res) => {
       alertMessage,
       alertStatus,
     };
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
 
     res.render("admin/category", {
       categories,
       alert,
+      user,
     });
   } catch (error) {
     req.flash("alertMessage", error.message);
@@ -26,7 +30,9 @@ const index = async (req, res) => {
 
 const create = (req, res) => {
   try {
-    res.render("admin/category/create");
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/category/create", { user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -38,10 +44,13 @@ const store = async (req, res) => {
   try {
     const { name } = req.body;
     const errors = validationResult(req);
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
     if (!errors.isEmpty()) {
       return res.render("admin/category/create", {
         errors: errors.array(),
         name,
+        user,
       });
     } else {
       await Category({ name })
@@ -64,7 +73,9 @@ const edit = async (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
     const categorie = await Category.findById(id).select("name _id");
-    res.render("admin/category/edit", { categorie, name });
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
+    res.render("admin/category/edit", { categorie, name, user });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
@@ -78,10 +89,13 @@ const update = async (req, res) => {
     const { name } = req.body;
     const errors = validationResult(req);
     const categorie = await Category.findById(id);
+    const token = req.cookies.token;
+    const user = jwt.decode(token);
     if (!errors.isEmpty()) {
       return res.render("admin/category/edit", {
         errors: errors.array(),
         categorie,
+        user,
       });
     } else {
       await Category.findByIdAndUpdate(id, { $set: { name: name } });

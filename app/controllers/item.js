@@ -236,11 +236,11 @@ const addImage = async (req, res) => {
     }
     req.flash("alertMessage", "Add Image Item Success");
     req.flash("alertStatus", "success");
-    res.redirect(`/item/${id}`);
+    return res.redirect(`/item/${id}`);
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
-    res.redirect("/item");
+    return res.redirect("/item");
   }
 };
 
