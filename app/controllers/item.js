@@ -217,12 +217,16 @@ const addImage = async (req, res) => {
     const { id } = req.params;
     const Items = await Item.findById(id);
     if (req.files) {
+      const extFile = ["image/jpeg", "image/jpg", "image/png"];
       for (let i = 0; i < req.files.length; i++) {
-        if (req.files[i].size > 2000000) {
+        if (
+          req.files[i].size > 2000000 ||
+          !extFile.includes(req.files[i].mimetype)
+        ) {
           for (let j = 0; j < req.files.length; j++) {
             deleteFiles("public/images", req.files[j].filename);
           }
-          throw new Error("Image Item max size 2000000");
+          throw new Error("Image Item max size 2000000 and must JPG,JPEG,PNG");
         }
         let imageItem = await ImageItem({
           imageUrl: req.files[i].filename,
