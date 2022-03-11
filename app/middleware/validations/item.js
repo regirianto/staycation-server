@@ -1,4 +1,5 @@
 const { body } = require("express-validator");
+const { deleteFiles } = require("../../../utils");
 
 const createValidation = [
   body("title").contains().withMessage("Field title is required"),

@@ -26,8 +26,8 @@
             </div>
             <div class="row flex-column">
               <div class="col-md text-center">
-                <a href="https://staycation-server-app.herokuapp.com/images/<%= booking.proofPayment%>" data-toggle="lightbox">
-                  <img src="https://staycation-server-app.herokuapp.com/images/<%= booking.proofPayment%>" alt="" width="400" >
+                <a href="/images/<%= booking.proofPayment%>" data-toggle="lightbox">
+                  <img src="/images/<%= booking.proofPayment%>" alt="" width="400" >
                 </a>
                 <% if (booking.status == 'pending') { %>
                   <div class="d-flex justify-content-center align-items-center my-4">
