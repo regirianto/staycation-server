@@ -42,14 +42,14 @@
                       <div class="form-group">
                         <label class="text-dark font-weight-bold" for="name">Name Featured</label>
                         <input type="text" class="form-control" id="name" placeholder="Please Input Name Featured"
-                          value="<%= featured.name %>" name="name">
+                          value="<%= featured.name %>" name="name" required>
                       </div>
                       <div class="form-group">
                         <img src="https://staycation-server-app.herokuapp.com/images/<%= featured.image %>" alt="" width="100px"
                           class="d-block my-1" id="imgPreview">
                         <label class="text-dark font-weight-bold" for="imgInput">Image Featured</label>
                         <input type="file" class="form-control" placeholder="Please Input Image Featured" name="image"
-                          id="imgInput">
+                          id="imgInput" required>
                       </div>
                       <button type="submit" class="btn btn-primary w-100">Save</button>
                     </form>

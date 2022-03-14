@@ -2,7 +2,19 @@ const { validationResult } = require("express-validator");
 const Booking = require("../models/Booking");
 const jwt = require("jsonwebtoken");
 const Item = require("../models/Item");
+const cloudinary = require("cloudinary").v2;
 const { deleteFiles } = require("../../utils");
+require("dotenv").config();
+
+const cloud_name = process.env.cloud_name;
+const api_key = process.env.api_key;
+const api_secret = process.env.api_secret;
+
+cloudinary.config({
+  cloud_name,
+  api_key,
+  api_secret,
+});
 
 const index = async (req, res) => {
   try {
@@ -89,6 +101,12 @@ const store = async (req, res) => {
         .status(404)
         .json({ error: true, message: "Item Booking Not found" });
     } else {
+      const cloudImg = await cloudinary.uploader.upload(
+        `public/images/${req.file.filename}`
+      );
+      if (cloudImg) {
+        deleteFiles("public/images", req.file.filename);
+      }
       const total = itemBooking.price * duration;
       const tax = (total * 10) / 100;
       const finalTotal = total + tax;
@@ -105,10 +123,11 @@ const store = async (req, res) => {
         duration,
         accountHolder,
         total: finalTotal,
-        proofPayment: req.file.filename,
+        proofPayment: cloudImg.secure_url,
       }).save();
       itemBooking.countBooking += 1;
       itemBooking.save();
+
       return res
         .status(201)
         .json({ message: "Booking Success", data: booking });
