@@ -12,7 +12,7 @@ const landingPage = async (req, res, next) => {
       .populate({
         path: "items",
         select: "_id title image city country",
-        populate: { path: "image", select: "_id imageUrl", limit: 1 },
+        populate: { path: "image", select: "_id imageUrl" },
       })
       .select("_id items name");
     const data = {

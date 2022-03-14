@@ -127,6 +127,7 @@ const destroy = async (req, res) => {
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };
 
