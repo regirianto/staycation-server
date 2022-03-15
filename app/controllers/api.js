@@ -7,7 +7,7 @@ const landingPage = async (req, res, next) => {
     const mostPicked = await Item.find()
       .populate({ path: "image", select: "_id imageUrl" })
       .limit(5)
-      .select("_id title image city country");
+      .select("_id title image city country price");
     const categories = await Category.find()
       .populate({
         path: "items",
