@@ -1,5 +1,7 @@
+const Item = require("../models/Item");
+const Booking = require("../models/Booking");
 const jwt = require("jsonwebtoken");
-const index = (req, res) => {
+const index = async (req, res) => {
   try {
     const alertMessage = req.flash("alertMessage");
     const alertStatus = req.flash("alertStatus");
@@ -9,7 +11,10 @@ const index = (req, res) => {
     };
     const token = req.cookies.token;
     const user = jwt.decode(token);
-    res.render("admin/dashboard", { alert, user });
+    const items = await Item.find().count();
+    const bookings = await Booking.find().count();
+
+    res.render("admin/dashboard", { alert, user, items, bookings });
   } catch (error) {
     req.flash("alertMessage", error.message);
     req.flash("alertStatus", "danger");
